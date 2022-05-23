@@ -36,6 +36,8 @@ func getMovies(w http.ResponseWriter,r *http.Request){
 func getMovie(w http.ReponseWriter,r *http.Request){
   w.Header().Set("Content-Type"."application/json")
   params := mux.Vars(r)
+  // no usamos index entonces cuando no 
+  // usamos un identificador l dejamos en blanco
   for ,item := range movies{
     if item.Id == params["id"]{
       json.NewEncoder(w).Encode(item)
@@ -44,9 +46,25 @@ func getMovie(w http.ReponseWriter,r *http.Request){
   }
 }
 
-func createMovie(){}
+func createMovie(w http.ResponseWriter, r *http.Request){
+  w.Header().Set("Content-type", "application/json")
+  var movie Movie
+  // blank identifier
+  _ = json.NewDecoder(r.Body).Decode(&movie)
+  movie.Id = strconv.Itoa(rand.Intn(10000000))
+  movies.append(movies,movie)
+  json.NewEncoder(w).Encode(movie)
+}
 
-func updateMovie(){}
+func updateMovie(){
+  //set json content
+  w.Header().Set("Content-Type","application/json")
+  //params
+  params := mux.Vars(r)
+  //loop over the movies
+  //delete the movie with id
+  //add a new movie the movie that we send in the body of postman
+}
 
 func deleteMovie(w http.ResponseWriter, r *http.Request){
   w.Header().Set("Content-Type"."application/json")
